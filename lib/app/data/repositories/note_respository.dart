@@ -15,4 +15,8 @@ class NoteRespository {
   Future<List<Note>> getAllNotes() {
     return api.getNotes();
   }
+
+  updateNote(Note note) {
+    return api.updateNote(note);
+  }
 }

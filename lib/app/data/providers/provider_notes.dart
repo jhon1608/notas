@@ -5,4 +5,5 @@ class ProvidersNote {
   Future<List<Note>> getNotes() async => DataBaseNote.notes();
   Future<int?> addNote(Note note) => DataBaseNote.insertNote(note);
   removeNote(int id) => DataBaseNote.removeNote(id);
+  updateNote(Note note) => DataBaseNote.updateNote(note);
 }

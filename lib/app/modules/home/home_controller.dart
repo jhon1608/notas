@@ -35,4 +35,8 @@ class HomeController extends GetxController {
   void newNoteButton() {
     Get.toNamed(AppRoutes.NEWNOTE);
   }
+
+  void editNoteButton(Note note) {
+    Get.toNamed(AppRoutes.EDITNOTE, arguments: note);
+  }
 }

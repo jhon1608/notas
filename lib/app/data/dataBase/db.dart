@@ -68,4 +68,18 @@ class DataBaseNote {
       print(e);
     }
   }
+
+  static Future<void> updateNote(Note note) async {
+    // Get a reference to the database.
+    Database db = await openDb();
+    // Update the given Note.
+    await db.update(
+      '$nameDb',
+      note.toMap(),
+      // Ensure that the Note has a matching id.
+      where: 'id = ?',
+      // Pass the Note's id as a whereArg to prevent SQL injection.
+      whereArgs: [note.id],
+    );
+  }
 }

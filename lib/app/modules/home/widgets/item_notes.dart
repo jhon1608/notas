@@ -1,6 +1,7 @@
 import 'package:notas/app/data/models/note.dart';
 import 'package:notas/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:notas/app/modules/home/widgets/alert.dart';
 
 class ItemNote extends StatelessWidget {
   final HomeController controller;
@@ -30,7 +31,9 @@ class ItemNote extends StatelessWidget {
               ListTile(
                 leading: IconButton(
                   icon: Icon(Icons.edit),
-                  onPressed: () {},
+                  onPressed: () {
+                    controller.editNoteButton(note);
+                  },
                   // style: ElevatedButton.styleFrom(
                   //   onPrimary: Colors.amber,
                   //   primary: Colors.amber[50],
@@ -42,7 +45,14 @@ class ItemNote extends StatelessWidget {
                 ),
                 trailing: IconButton(
                   onPressed: () {
-                    controller.removeNote(note.id);
+                    showDialog(
+                      context: context,
+                      builder: (_) => AlertDia(
+                        id: note.id,
+                      ),
+                    );
+
+                    //controller.removeNote(note.id);
                   },
                   icon: Icon(
                     Icons.delete,

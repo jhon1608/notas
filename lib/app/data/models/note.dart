@@ -12,13 +12,21 @@ class Note {
     required this.title,
     required this.description,
   });
+  copy({DateTime? createTime, int? id, String? title, String? description}) {
+    return Note(
+      createTime: createTime ?? this.createTime,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      id: id ?? this.id,
+    );
+  }
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'title': title,
       'description': description,
-      'createTime': createTime
+      'createTime': createTime.toString()
     };
   }
 
