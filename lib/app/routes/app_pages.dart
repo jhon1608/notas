@@ -5,6 +5,7 @@ import 'package:notas/app/modules/home/home_binding.dart';
 import 'package:notas/app/modules/home/home_page.dart';
 import 'package:notas/app/modules/new_note/new_note_binding.dart';
 import 'package:notas/app/modules/new_note/new_note_page.dart';
+
 import 'package:notas/app/routes/app_routes.dart';
 
 class AppPages {

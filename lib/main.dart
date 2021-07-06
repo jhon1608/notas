@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:notas/app/modules/home/home_binding.dart';
 import 'package:notas/app/modules/home/home_page.dart';
 import 'package:notas/app/routes/app_pages.dart';
+import 'package:notas/app/theme/theme.dart';
 import 'package:notas/app/utils/dependency_inyection.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.amber,
+        primarySwatch: AppTheme.instance.themeApp,
       ),
       home: const HomePage(),
       initialBinding: HomeBinding(),

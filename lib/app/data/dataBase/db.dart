@@ -11,9 +11,10 @@ class DataBaseNote {
         '$nameDb.db',
       ),
       onCreate: (db, version) {
+        print("se crea la base");
         // Ejecuta la sentencia CREATE TABLE en la base de datos
         return db.execute(
-          "CREATE TABLE $nameDb(id INTEGER PRIMARY KEY, title TEXT, description TEXT, createTime TEXT)",
+          "CREATE TABLE $nameDb(id INTEGER PRIMARY KEY, title TEXT, description TEXT, createTime TEXT, favorite INTEGER, trash INTEGER)",
         );
       },
       // Establece la versión. Esto ejecuta la función onCreate y proporciona una
@@ -36,7 +37,9 @@ class DataBaseNote {
           id: maps[i]['id'],
           title: maps[i]['title'],
           description: maps[i]['description'],
-          createTime: DateTime.parse(maps[i]['createTime']));
+          createTime: DateTime.parse(maps[i]['createTime']),
+          favorite: maps[i]['favorite'],
+          trash: maps[i]['trash']);
     });
   }
 
@@ -51,7 +54,9 @@ class DataBaseNote {
         //'id': note.id,
         'title': note.title,
         'description': note.description,
-        'createTime': note.createTime.toString()
+        'createTime': note.createTime.toString(),
+        'favorite': note.favorite,
+        'trash': note.trash,
       };
       return db.insert(nameDb, map);
     } catch (e) {
@@ -63,6 +68,7 @@ class DataBaseNote {
     Database db = await openDb();
     // db.execute("DELETE FROM nameDb");
     try {
+      print("eliminando nota.. $id");
       return db.delete(nameDb, where: "id = ?", whereArgs: [id]);
     } catch (e) {
       print(e);

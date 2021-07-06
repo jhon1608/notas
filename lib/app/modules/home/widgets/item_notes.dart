@@ -1,7 +1,9 @@
+import 'package:get/get.dart';
 import 'package:notas/app/data/models/note.dart';
 import 'package:notas/app/modules/home/home_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:notas/app/modules/home/widgets/alert.dart';
+import 'package:notas/app/theme/theme.dart';
 
 class ItemNote extends StatelessWidget {
   final HomeController controller;
@@ -14,79 +16,98 @@ class ItemNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      child: Card(
-        shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-        color: note.description.length > 100
-            ? Colors.yellow[100]
-            : Colors.yellow[100],
-        child: Container(
-          padding: const EdgeInsets.all(5),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ListTile(
-                leading: IconButton(
-                  icon: Icon(Icons.edit),
-                  onPressed: () {
-                    controller.editNoteButton(note);
-                  },
-                  // style: ElevatedButton.styleFrom(
-                  //   onPrimary: Colors.amber,
-                  //   primary: Colors.amber[50],
-                  // ),
-                  color: Colors.amberAccent,
-                  highlightColor: Colors.amber[100],
-
-                  splashColor: Colors.yellow,
-                ),
-                trailing: IconButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => AlertDia(
-                        id: note.id,
-                      ),
-                    );
-
-                    //controller.removeNote(note.id);
-                  },
-                  icon: Icon(
-                    Icons.delete,
-                    color: Colors.red[400],
-                  ),
-                  splashColor: Colors.red,
-                  highlightColor: Colors.red[100],
-                ),
-                title: Center(
-                  child: Text(
-                    note.title,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontSize: 24),
+    return Card(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+      color: AppTheme.instance.colorNote,
+      child: Container(
+        width: Get.width - 20,
+        padding: const EdgeInsets.all(5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: () {
+                      controller.editNoteButton(note);
+                    },
+                    color: AppTheme.instance.colorIconEdit,
                   ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.all(10),
-                child: Text(
-                  note.description,
-                  maxLines: 7,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 20),
+                Expanded(
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.star,
+                    ),
+                    onPressed: () {
+                      controller.foavoriteNote(note);
+                    },
+                    color: (note.favorite == 1)
+                        ? AppTheme.instance.colorIconEdit
+                        : Colors.grey[400],
+                  ),
                 ),
+                Expanded(
+                  child: IconButton(
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDia(
+                          id: note.id,
+                          note: note,
+                          onAccept: () {
+                            Get.find<HomeController>().trashNote(note);
+                            Navigator.of(context).pop();
+                          },
+                          menssage:
+                              "¿Está seguro de pasar a la papelera esta nota?",
+                        ),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.delete,
+                      color: AppTheme.instance.colorIconRemove,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Center(
+              child: Text(
+                note.title,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: AppTheme.instance.sizeTitle,
+                    color: AppTheme.instance.colorText),
               ),
-              Padding(
+            ),
+            Padding(
+              padding: EdgeInsets.all(10),
+              child: Text(
+                note.description,
+                maxLines: 7,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                    fontSize: AppTheme.instance.sizeText,
+                    color: AppTheme.instance.colorText),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
                   padding: EdgeInsets.all(5),
                   child: Text(
                     note.createTimeFormat(),
-                    style: TextStyle(color: Colors.black54),
-                  )),
-            ],
-          ),
+                    style: TextStyle(color: AppTheme.instance.colorTextMin),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

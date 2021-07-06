@@ -1,6 +1,7 @@
 import 'package:notas/app/modules/new_note/new_note_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:notas/app/theme/theme.dart';
 
 class NewNotePage extends StatelessWidget {
   const NewNotePage({Key? key}) : super(key: key);
@@ -10,8 +11,9 @@ class NewNotePage extends StatelessWidget {
     return GetBuilder<NewNoteController>(
       builder: (_) => Container(
         child: Scaffold(
+          backgroundColor: AppTheme.instance.colorNoteBackground,
           appBar: AppBar(
-            backgroundColor: Colors.white,
+            backgroundColor: AppTheme.instance.colorAppBar,
             actions: [
               IconButton(
                 onPressed: () {
@@ -19,7 +21,7 @@ class NewNotePage extends StatelessWidget {
                 },
                 icon: Icon(
                   Icons.cancel_rounded,
-                  color: Colors.red,
+                  color: AppTheme.instance.colorIconRemove,
                 ),
               )
             ],
@@ -29,7 +31,7 @@ class NewNotePage extends StatelessWidget {
               onPressed: () {
                 _.submitButton();
               },
-              color: Colors.green,
+              color: AppTheme.instance.colorIconCheck,
             ),
           ),
           body: SingleChildScrollView(
@@ -42,14 +44,16 @@ class NewNotePage extends StatelessWidget {
                   Center(
                       child: Text(
                     "Ni nota",
-                    style: const TextStyle(color: Colors.black38),
+                    style: TextStyle(color: AppTheme.instance.colorTextMin),
                   )),
                   TextFormField(
                     maxLength: 30,
                     maxLines: null,
                     keyboardType: TextInputType.multiline,
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(
+                        fontSize: 30, color: AppTheme.instance.colorText),
                     decoration: InputDecoration(
+                      hintStyle: TextStyle(color: AppTheme.instance.colorText),
                       hintText: "Título",
                       border: InputBorder.none,
                     ),
@@ -59,10 +63,12 @@ class NewNotePage extends StatelessWidget {
                     onChanged: _.onChangedDescription,
                     maxLines: null,
                     decoration: InputDecoration(
+                      hintStyle: TextStyle(color: AppTheme.instance.colorText),
                       hintText: "Empieza a Escribir",
                       border: InputBorder.none,
                     ),
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                        fontSize: 20, color: AppTheme.instance.colorText),
                   ),
                 ],
               ),

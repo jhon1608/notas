@@ -5,19 +5,32 @@ class Note {
   final String title;
   final String description;
   final DateTime createTime;
+  int favorite;
+  int trash;
 
   Note({
     required this.createTime,
     this.id = 1,
     required this.title,
     required this.description,
+    this.favorite = 0,
+    this.trash = 0,
   });
-  copy({DateTime? createTime, int? id, String? title, String? description}) {
+  copy({
+    DateTime? createTime,
+    int? id,
+    String? title,
+    String? description,
+    int? favorite,
+    int? trash,
+  }) {
     return Note(
       createTime: createTime ?? this.createTime,
       title: title ?? this.title,
       description: description ?? this.description,
       id: id ?? this.id,
+      trash: trash ?? this.trash,
+      favorite: favorite ?? this.favorite,
     );
   }
 
@@ -26,8 +39,17 @@ class Note {
       'id': id,
       'title': title,
       'description': description,
-      'createTime': createTime.toString()
+      'createTime': createTime.toString(),
+      'favorite': favorite,
+      'trash': trash,
     };
+  }
+
+  String createTimeFormat2() {
+    DateTime now = DateTime.now();
+
+    String dt = new DateFormat("dd/MM/yyyy hh:ss").format(createTime);
+    return dt;
   }
 
   String createTimeFormat() {
@@ -42,12 +64,12 @@ class Note {
     }
 
     if (dife < hora) {
-      return " Hace ${dife.inMinutes} min";
+      return "Hace ${dife.inMinutes} min";
     }
     if (dife < day) {
-      return " Hace ${dife.inHours} hs";
+      return "Hace ${dife.inHours} hs";
     }
-    return " Hace ${dife.inDays} days";
+    return "Hace ${dife.inDays} days";
 
     // String dt = new DateFormat("dd-MM-yyyy hh:ss").format(createTime);
     // return dt;
